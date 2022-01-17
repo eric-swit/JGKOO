@@ -1,9 +1,10 @@
 package main
 
 import (
-	//"github.com/go-git/go-git/v5"
 	"fmt"
 	"os"
+	"os/exec"
+	"time"
 )
 
 func checkError(err error) {
@@ -60,6 +61,8 @@ const (
 	SupportApi       = "swit-support-api-golang"
 	SupportFront     = "swit-support-front-angular"
 	SupportGrpc      = "swit-support-grpc-golang"
+	Batch            = "swit-batch"
+	Scheduler        = "swit-scheduler-api-golang"
 
 	V1 = "v1"
 	V2 = "v2"
@@ -75,7 +78,6 @@ type Data struct {
 type Distribution struct {
 	Path    string
 	Version string
-	Tag     string
 }
 
 var basePath = "$HOME/go/src/swit/"
@@ -97,14 +99,32 @@ func (a *Data) create() error {
 		}
 
 		str += fmt.Sprintf("cd %s \n", basePath+t.Path)
-		str += fmt.Sprintf("git checkout %s \n", branch)
-		str += fmt.Sprintf("git pull \n")
-		str += fmt.Sprintf("git tag %s \n", t.Tag)
-		str += fmt.Sprintf("git push origin %s \n", t.Tag)
+		//str += fmt.Sprintf("git checkout %s \n", branch)
+		//str += fmt.Sprintf("git pull \n")
+
+		cmd := exec.Command("git", "checkout", branch)
+		cmd.Dir = "/Users/erickoo/go/src/swit/" + t.Path
+		cmd.Run()
+
+		cmd = exec.Command("git", "pull", branch)
+		cmd.Dir = "/Users/erickoo/go/src/swit/" + t.Path
+		cmd.Run()
+
+		cmd = exec.Command("git", "describe", "--tags", "--abbrev=0")
+		cmd.Dir = "/Users/erickoo/go/src/swit/" + t.Path
+		out, err := cmd.Output()
+		if err != nil {
+			fmt.Println(err)
+		}
+		tag := string(out)
+
+		str += fmt.Sprintf("git tag %s \n", tag)
+		str += fmt.Sprintf("git push origin %s \n \n", tag)
 	}
 
 	b := []byte(str)
-	f1, err := os.Create("prod.sh")
+	r := time.Now().Format("2006-01-02")
+	f1, err := os.Create("prod_" + r + ".sh")
 	checkError(err)
 	defer f1.Close()
 	fmt.Fprintf(f1, string(b))
@@ -128,13 +148,15 @@ func (a *Data) merge() error {
 		}
 
 		str += fmt.Sprintf("cd %s \n", basePath+t.Path)
-		str += fmt.Sprintf("git checkout %s \n", branch)
-		str += fmt.Sprintf("git pull \n")
+		//str += fmt.Sprintf("git checkout %s \n", branch)
+		//str += fmt.Sprintf("git pull \n")
 		str += fmt.Sprintf("git merge origin/%s \n", mergeBranch)
+		str += fmt.Sprintf("git push origin %s \n \n", branch)
 	}
 
 	b := []byte(str)
-	f1, err := os.Create("prod_merge.sh")
+	r := time.Now().Format("2006-01-02")
+	f1, err := os.Create("prod_merge_" + r + ".sh")
 	checkError(err)
 	defer f1.Close()
 	fmt.Fprintf(f1, string(b))
@@ -150,11 +172,25 @@ func New(v []*Distribution) *Data {
 
 func main() {
 	var s []*Distribution
-	s = append(s, &Distribution{Path: Saml, Version: V1, Tag: "test"})
-	s = append(s, &Distribution{Path: Channel, Version: V1, Tag: "test"})
-	s = append(s, &Distribution{Path: Project, Version: V5, Tag: "test"})
+
+	s = append(s, &Distribution{Path: Message, Version: V5})
+	s = append(s, &Distribution{Path: Task, Version: V5})
+	s = append(s, &Distribution{Path: ApiV1, Version: V1})
+	s = append(s, &Distribution{Path: ApiV5, Version: V1})
+	s = append(s, &Distribution{Path: Channel, Version: V4})
+	s = append(s, &Distribution{Path: Project, Version: V4})
+	s = append(s, &Distribution{Path: Contents, Version: V1})
+	s = append(s, &Distribution{Path: Asset, Version: V1})
+	s = append(s, &Distribution{Path: Storage, Version: V1})
+	s = append(s, &Distribution{Path: Channel, Version: V5})
+	s = append(s, &Distribution{Path: Project, Version: V5})
+	s = append(s, &Distribution{Path: Openapi, Version: V1})
 
 	d := New(s)
 	d.merge()
 	d.create()
 }
+
+// 마지막 태그명 복붙
+// git describe --tags $(git rev-list --tags --max-count=1) | pbcopy
+// pbpaste
