@@ -64,11 +64,12 @@ const (
 	Batch            = "swit-batch"
 	Scheduler        = "swit-scheduler-api-golang"
 
-	V1 = "v1"
-	V2 = "v2"
-	V3 = "v3"
-	V4 = "v4"
-	V5 = "v5"
+	V1   = "v1"
+	V2   = "v2"
+	V3   = "v3"
+	V4   = "v4"
+	V5   = "v5"
+	MAIN = "main"
 )
 
 type Data struct {
@@ -94,13 +95,15 @@ func (a *Data) create() error {
 			branch = "release.v4"
 		case V5:
 			branch = "release.v5"
+		case MAIN:
+			branch = "main"
 		default:
 			branch = "master"
 		}
 
 		str += fmt.Sprintf("cd %s \n", basePath+t.Path)
-		//str += fmt.Sprintf("git checkout %s \n", branch)
-		//str += fmt.Sprintf("git pull \n")
+		str += fmt.Sprintf("git checkout %s \n", branch)
+		str += fmt.Sprintf("git pull \n")
 
 		cmd := exec.Command("git", "checkout", branch)
 		cmd.Dir = "/Users/erickoo/go/src/swit/" + t.Path
@@ -174,17 +177,12 @@ func main() {
 	var s []*Distribution
 
 	s = append(s, &Distribution{Path: Message, Version: V5})
-	s = append(s, &Distribution{Path: Task, Version: V5})
-	s = append(s, &Distribution{Path: ApiV1, Version: V1})
-	s = append(s, &Distribution{Path: ApiV5, Version: V1})
+	s = append(s, &Distribution{Path: Apps, Version: V1})
+	s = append(s, &Distribution{Path: User, Version: V1})
+	s = append(s, &Distribution{Path: Sfdc, Version: V1})
 	s = append(s, &Distribution{Path: Channel, Version: V4})
-	s = append(s, &Distribution{Path: Project, Version: V4})
-	s = append(s, &Distribution{Path: Contents, Version: V1})
-	s = append(s, &Distribution{Path: Asset, Version: V1})
-	s = append(s, &Distribution{Path: Storage, Version: V1})
-	s = append(s, &Distribution{Path: Channel, Version: V5})
-	s = append(s, &Distribution{Path: Project, Version: V5})
-	s = append(s, &Distribution{Path: Openapi, Version: V1})
+	s = append(s, &Distribution{Path: Company, Version: V1})
+	s = append(s, &Distribution{Path: ApiV3, Version: V1})
 
 	d := New(s)
 	d.merge()
