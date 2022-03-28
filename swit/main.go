@@ -201,10 +201,7 @@ func (a *Data) create() error {
 
 		cmd = exec.Command("git", "pull", branch)
 		cmd.Dir = "/Users/erickoo/go/src/swit/" + t.Path
-		err = cmd.Run()
-		if err != nil {
-			panic(err)
-		}
+		_ = cmd.Run()
 
 		cmd = exec.Command("git", "describe", "--tags", "--abbrev=0")
 		cmd.Dir = "/Users/erickoo/go/src/swit/" + t.Path
@@ -222,7 +219,7 @@ func (a *Data) create() error {
 	r := time.Now().Format("2006-01-02")
 	f1, err := os.Create("prod_" + r + ".sh")
 	checkError(err)
-	func(f1 *os.File) {
+	defer func(f1 *os.File) {
 		_ = f1.Close()
 	}(f1)
 	_, err = fmt.Fprintf(f1, string(b))
@@ -292,7 +289,7 @@ func main() {
 	s = append(s, &Distribution{Path: Contents, Version: V1})
 	s = append(s, &Distribution{Path: User, Version: V1})
 	s = append(s, &Distribution{Path: Task, Version: V4})
-
+	s = append(s, &Distribution{Path: Hook, Version: V1})
 	//1차 배포
 	//s = append(s, &Distribution{Path: Badge, Version: V1})
 	//s = append(s, &Distribution{Path: Activity, Version: V1})
