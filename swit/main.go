@@ -115,8 +115,6 @@ func (a *Data) getBranch(str, version string) string {
 	case Channel:
 		if version == V4 {
 			branch = ReleaseV4
-		} else if version == V5 {
-			branch = ReleaseV5
 		}
 	case ChannelV5:
 		branch = ReleaseV5
@@ -138,8 +136,6 @@ func (a *Data) getBranch(str, version string) string {
 	case Project:
 		if version == V4 {
 			branch = ReleaseV4
-		} else if version == V5 {
-			branch = ReleaseV5
 		}
 	case ProjectV5:
 		branch = ReleaseV5
@@ -278,149 +274,30 @@ func main() {
 
 	//배포
 	s = append(s, &Distribution{Path: ApiV1, Version: V1})
+	s = append(s, &Distribution{Path: ApiV3, Version: V1})
+	s = append(s, &Distribution{Path: ApiV5, Version: V5})
+	s = append(s, &Distribution{Path: Workspace, Version: V1})
 	s = append(s, &Distribution{Path: Workspace, Version: V4})
-	s = append(s, &Distribution{Path: Apps, Version: V1})
+	s = append(s, &Distribution{Path: Project, Version: V1})
+	s = append(s, &Distribution{Path: Project, Version: V4})
+	s = append(s, &Distribution{Path: Project, Version: V5})
+	s = append(s, &Distribution{Path: Channel, Version: V1})
+	s = append(s, &Distribution{Path: Channel, Version: V4})
+	s = append(s, &Distribution{Path: Channel, Version: V5})
+
+	s = append(s, &Distribution{Path: Socket, Version: V1})
+	s = append(s, &Distribution{Path: Badge, Version: V1})
+	s = append(s, &Distribution{Path: Task, Version: V5})
+	s = append(s, &Distribution{Path: SupportApi, Version: V1})
+	s = append(s, &Distribution{Path: SupportFront, Version: V1})
+	s = append(s, &Distribution{Path: SupportGrpc, Version: V1})
 	s = append(s, &Distribution{Path: Storage, Version: V1})
-	s = append(s, &Distribution{Path: Asset, Version: V1})
-	s = append(s, &Distribution{Path: Message, Version: V5})
-	s = append(s, &Distribution{Path: Approval, Version: V1})
-	s = append(s, &Distribution{Path: Activity, Version: V1})
-	s = append(s, &Distribution{Path: Notification, Version: V1})
-	s = append(s, &Distribution{Path: Contents, Version: V1})
+
+	s = append(s, &Distribution{Path: Company, Version: V1})
 	s = append(s, &Distribution{Path: User, Version: V1})
-	s = append(s, &Distribution{Path: Task, Version: V4})
-	s = append(s, &Distribution{Path: Hook, Version: V1})
-	//1차 배포
-	//s = append(s, &Distribution{Path: Badge, Version: V1})
-	//s = append(s, &Distribution{Path: Activity, Version: V1})
-	//s = append(s, &Distribution{Path: Message, Version: V5})
-	//s = append(s, &Distribution{Path: ProjectV5, Version: V5})
-	//s = append(s, &Distribution{Path: Task, Version: V4})
-	//s = append(s, &Distribution{Path: Task, Version: V5})
-	//s = append(s, &Distribution{Path: ApiV3, Version: V1})
-	//s = append(s, &Distribution{Path: ApiV1, Version: V1})
-
-	//마이그레이션
-
-	//2차 배포
-	//s = append(s, &Distribution{Path: Badge, Version: V1})
-	//s = append(s, &Distribution{Path: Notification, Version: V1})
-	//s = append(s, &Distribution{Path: Activity, Version: V1})
-	//s = append(s, &Distribution{Path: Message, Version: V5})
-	//s = append(s, &Distribution{Path: Project, Version: V4})
-	//s = append(s, &Distribution{Path: ProjectV5, Version: V5})
-	//s = append(s, &Distribution{Path: Task, Version: V4})
-	//s = append(s, &Distribution{Path: Task, Version: V5})
-	//s = append(s, &Distribution{Path: Workspace, Version: V1})
-	//s = append(s, &Distribution{Path: Channel, Version: V4})
-	//s = append(s, &Distribution{Path: Channel, Version: V1})
-	//s = append(s, &Distribution{Path: ChannelV5, Version: V5})
-	//s = append(s, &Distribution{Path: Board, Version: V1})
-	//s = append(s, &Distribution{Path: Openapi, Version: V1})
-	//s = append(s, &Distribution{Path: Workspace, Version: V4})
-	//s = append(s, &Distribution{Path: Contents, Version: V1})
-	//s = append(s, &Distribution{Path: ApiV5, Version: V5})
-	//s = append(s, &Distribution{Path: ApiV3, Version: V1})
-	//s = append(s, &Distribution{Path: ApiV1, Version: V1})
-
-	//s = append(s, &Distribution{Path: ChannelV5, Version: V5})
-	//s = append(s, &Distribution{Path: Board, Version: V1})
-	//s = append(s, &Distribution{Path: ApiV1, Version: V1})
-	//s = append(s, &Distribution{Path: ProjectV5, Version: V5})
-	//s = append(s, &Distribution{Path: Badge, Version: V1})
-	//s = append(s, &Distribution{Path: Notification, Version: V1})
-	//s = append(s, &Distribution{Path: Activity, Version: V1})
-	//s = append(s, &Distribution{Path: Message, Version: V5})
-	//s = append(s, &Distribution{Path: Project, Version: V4})
-	//s = append(s, &Distribution{Path: Task, Version: V4})
-	//s = append(s, &Distribution{Path: Task, Version: V5})
-	//s = append(s, &Distribution{Path: Workspace, Version: V1})
-	//s = append(s, &Distribution{Path: Channel, Version: V4})
-	//s = append(s, &Distribution{Path: ApiV3, Version: V1})
-	//s = append(s, &Distribution{Path: Contents, Version: V1})
-	//s = append(s, &Distribution{Path: ApiV5, Version: V5})
-	//s = append(s, &Distribution{Path: Approval, Version: V1})
-	//s = append(s, &Distribution{Path: Company, Version: V1})
-	//s = append(s, &Distribution{Path: Apps, Version: V1})
-	//s = append(s, &Distribution{Path: Mention, Version: V1})
-	//s = append(s, &Distribution{Path: EventSub, Version: V1})
-	//s = append(s, &Distribution{Path: Emoji, Version: V1})
-	//s = append(s, &Distribution{Path: Elastic, Version: V1})
-	//s = append(s, &Distribution{Path: Alltask, Version: V1})
-	//s = append(s, &Distribution{Path: Activity, Version: V1})
-	//s = append(s, &Distribution{Path: SwitBot, Version: V1})
-	//s = append(s, &Distribution{Path: Workspace, Version: V4})
-	//s = append(s, &Distribution{Path: AppVersion, Version: V1})
-	//s = append(s, &Distribution{Path: Stats, Version: V1})
-	//s = append(s, &Distribution{Path: SubscribeAgent, Version: V1})
-
-	//
-	//
-	//s = append(s, &Distribution{Path: ApiV1, Version: V1})
-	//s = append(s, &Distribution{Path: ApiV3, Version: V1})
-	//s = append(s, &Distribution{Path: ApiV5, Version: V5})
-	//s = append(s, &Distribution{Path: ChannelV5, Version: V5})
-	//s = append(s, &Distribution{Path: Board, Version: V1})
-	//s = append(s, &Distribution{Path: ProjectV5, Version: V5})
-	//s = append(s, &Distribution{Path: Badge, Version: V1})
-	//s = append(s, &Distribution{Path: Project, Version: V4})
-	//s = append(s, &Distribution{Path: Task, Version: V4})
-	//s = append(s, &Distribution{Path: Task, Version: V5})
-	//s = append(s, &Distribution{Path: Workspace, Version: V1})
-	//s = append(s, &Distribution{Path: Channel, Version: V4})
-	//s = append(s, &Distribution{Path: Contents, Version: V1})
-	//s = append(s, &Distribution{Path: Approval, Version: V1})
-	//s = append(s, &Distribution{Path: Company, Version: V1})
-	//s = append(s, &Distribution{Path: Message, Version: V5})
-	//s = append(s, &Distribution{Path: Activity, Version: V1})
-	//s = append(s, &Distribution{Path: Notification, Version: V1})
-	//s = append(s, &Distribution{Path: Apps, Version: V5})
-	//
-	//
-	////gorm
-	//s = append(s, &Distribution{Path: Mention, Version: V1})
-	//s = append(s, &Distribution{Path: EventSub, Version: V1})
-	//s = append(s, &Distribution{Path: Emoji, Version: V1})
-	//s = append(s, &Distribution{Path: Elastic, Version: V1})
-	//s = append(s, &Distribution{Path: Alltask, Version: V1})
-	//s = append(s, &Distribution{Path: SwitBot, Version: V1})
-	//s = append(s, &Distribution{Path: Workspace, Version: V4})
-	//s = append(s, &Distribution{Path: AppVersion, Version: V1})
-	//s = append(s, &Distribution{Path: Stats, Version: V1})
-	//s = append(s, &Distribution{Path: SubscribeAgent, Version: V1})
-
-	//s = append(s, &Distribution{Path: Channel, Version: V5})
-	//s = append(s, &Distribution{Path: Channel, Version: V4})
-	//s = append(s, &Distribution{Path: Approval, Version: V1})
-	//s = append(s, &Distribution{Path: Mention, Version: V1})
-	//s = append(s, &Distribution{Path: EventSub, Version: V1})
-	//s = append(s, &Distribution{Path: Emoji, Version: V1})
-	//s = append(s, &Distribution{Path: Elastic, Version: V1})
-	//s = append(s, &Distribution{Path: Company, Version: V1})
-	//s = append(s, &Distribution{Path: Contents, Version: V1})
-	//s = append(s, &Distribution{Path: Board, Version: V1})
-	//s = append(s, &Distribution{Path: Alltask, Version: V1})
-	//s = append(s, &Distribution{Path: Asset, Version: V1})
-	//s = append(s, &Distribution{Path: Activity, Version: V1})
-	//s = append(s, &Distribution{Path: Badge, Version: V1})
-	//s = append(s, &Distribution{Path: Notification, Version: V1})
-	//s = append(s, &Distribution{Path: Project, Version: V1})
-	//s = append(s, &Distribution{Path: Project, Version: V4})
-	//s = append(s, &Distribution{Path: Project, Version: V5})
-	//s = append(s, &Distribution{Path: SwitBot, Version: V1})
-	//s = append(s, &Distribution{Path: Workspace, Version: V4})
-	//s = append(s, &Distribution{Path: AppVersion, Version: V1})
-	//s = append(s, &Distribution{Path: Stats, Version: V1})
-	//s = append(s, &Distribution{Path: SubscribeAgent, Version: V1})
-	//
-	//s = append(s, &Distribution{Path: Task, Version: V5})
-	//s = append(s, &Distribution{Path: Message, Version: V1})
-	//s = append(s, &Distribution{Path: User, Version: V1})
-	//s = append(s, &Distribution{Path: Apps, Version: V1})
-	//
-	//s = append(s, &Distribution{Path: ApiV3, Version: V1})
-	//s = append(s, &Distribution{Path: ApiV5, Version: V1})
-	//s = append(s, &Distribution{Path: ApiV1, Version: V1})
+	s = append(s, &Distribution{Path: User, Version: V4})
+	s = append(s, &Distribution{Path: Mention, Version: V1})
+	s = append(s, &Distribution{Path: Contents, Version: V1})
 
 	d := New(s)
 	_ = d.merge()
