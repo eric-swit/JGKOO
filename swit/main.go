@@ -31,56 +31,56 @@ var basePath = "$HOME/go/src/swit/"
 
 const (
 	Hook             = "hook"
-	ApiV3            = "swit-api-golang"
-	ApiV1            = "swit-apiv1"
-	ApiV5            = "swit-apiv5-golang"
-	Badge            = "swit-badge-golang"
-	Storage          = "swit-gcs-file-golang"
-	Activity         = "swit-grpc-activity-golang"
-	Alltask          = "swit-grpc-alltask-golang"
-	Approval         = "swit-grpc-approval-golang"
-	Apps             = "swit-grpc-apps-golang"
-	AppVersion       = "swit-grpc-appVersion-golang"
-	Asset            = "swit-grpc-asset-golang"
-	Auth             = "swit-grpc-auth-golang"
-	Board            = "swit-grpc-board-golang"
-	Channel          = "swit-grpc-channel-golang"
-	ChannelV5        = "swit-grpc-channel-v5-golang"
-	Company          = "swit-grpc-company-golang"
-	Contents         = "swit-grpc-contents-golang"
-	Coupon           = "swit-grpc-coupon-golang"
-	Elastic          = "swit-grpc-elastic"
-	Email            = "swit-grpc-email"
-	Emoji            = "swit-grpc-emoji"
-	EventSub         = "swit-grpc-eventsub-golang"
-	Export           = "swit-grpc-export-golang"
-	Import           = "swit-grpc-import"
-	Mention          = "swit-grpc-mention-golang"
-	Message          = "swit-grpc-message-golang"
-	Pay              = "swit-grpc-pay-golang"
-	Project          = "swit-grpc-project-golang"
-	ProjectV5        = "swit-grpc-project-v5-golang"
-	Sfdc             = "swit-grpc-sfdc-golang"
-	Stats            = "swit-grpc-stats"
-	SwitBot          = "swit-grpc-switbot-golang"
-	Task             = "swit-grpc-task-golang"
-	User             = "swit-grpc-user-golang"
-	Workspace        = "swit-grpc-workspace-golang"
-	HttpOauth2       = "swit-http-oauth2-golang"
-	ImportSql        = "swit-import-sql"
-	InviteServer     = "swit-invite-server"
-	MentionSubscribe = "swit-mention-subscribe-nodejs"
-	Notification     = "swit-notification"
-	Openapi          = "swit-openapi-golang"
-	Saml             = "swit-saml-sp"
-	Socket           = "swit-socket-api"
-	SubscribeAgent   = "swit-subscribe-agent-golang"
-	SupportApi       = "swit-support-api-golang"
-	SupportFront     = "swit-support-front-angular"
-	SupportGrpc      = "swit-support-grpc-golang"
-	Batch            = "swit-batch"
-	BatchGrpc        = "swit-grpc-batch"
-	Scheduler        = "swit-scheduler-api-golang"
+	ApiV3            = "switbe-api-golang"
+	ApiV1            = "switbe-apiv1"
+	ApiV5            = "switbe-apiv5-golang"
+	Badge            = "switbe-badge-golang"
+	Storage          = "switbe-gcs-file-golang"
+	Activity         = "switbe-grpc-activity-golang"
+	Alltask          = "switbe-grpc-alltask-golang"
+	Approval         = "switbe-grpc-approval-golang"
+	Apps             = "switbe-grpc-apps-golang"
+	AppVersion       = "switbe-grpc-appVersion-golang"
+	Asset            = "switbe-grpc-asset-golang"
+	Auth             = "switbe-grpc-auth-golang"
+	Board            = "switbe-grpc-board-golang"
+	Channel          = "switbe-grpc-channel-golang"
+	ChannelV5        = "switbe-grpc-channel-v5-golang"
+	Company          = "switbe-grpc-company-golang"
+	Contents         = "switbe-grpc-contents-golang"
+	Coupon           = "switbe-grpc-coupon-golang"
+	Elastic          = "switbe-grpc-elastic"
+	Email            = "switbe-grpc-email"
+	Emoji            = "switbe-grpc-emoji"
+	EventSub         = "switbe-grpc-eventsub-golang"
+	Export           = "switbe-grpc-export-golang"
+	Import           = "switbe-grpc-import"
+	Mention          = "switbe-grpc-mention-golang"
+	Message          = "switbe-grpc-message-golang"
+	Pay              = "switbe-grpc-pay-golang"
+	Project          = "switbe-grpc-project-golang"
+	ProjectV5        = "switbe-grpc-project-v5-golang"
+	Sfdc             = "switbe-grpc-sfdc-golang"
+	Stats            = "switbe-grpc-stats"
+	SwitBot          = "switbe-grpc-switbot-golang"
+	Task             = "switbe-grpc-task-golang"
+	User             = "switbe-grpc-user-golang"
+	Workspace        = "switbe-grpc-workspace-golang"
+	HttpOauth2       = "switbe-http-oauth2-golang"
+	ImportSql        = "switbe-import-sql"
+	InviteServer     = "switbe-invite-server"
+	MentionSubscribe = "switbe-mention-subscribe-nodejs"
+	Notification     = "switbe-notification"
+	Openapi          = "switbe-openapi-golang"
+	Saml             = "switbe-saml-sp"
+	Socket           = "switbe-socket-api"
+	SubscribeAgent   = "switbe-subscribe-agent-golang"
+	SupportApi       = "switbe-support-api-golang"
+	SupportFront     = "switbe-support-front-angular"
+	SupportGrpc      = "switbe-support-grpc-golang"
+	Batch            = "switbe-batch"
+	BatchGrpc        = "switbe-grpc-batch"
+	Scheduler        = "switbe-scheduler-api-golang"
 
 	ReleaseV4 = "release.v4"
 	ReleaseV5 = "release.v5"
@@ -192,7 +192,8 @@ func (a *Data) create() error {
 		cmd.Dir = "/Users/erickoo/go/src/swit/" + t.Path
 		err := cmd.Run()
 		if err != nil {
-			panic(err)
+			fmt.Println("err : ", t.Path, " ", t.Version)
+			continue
 		}
 
 		cmd = exec.Command("git", "pull", branch)
@@ -273,31 +274,34 @@ func main() {
 	var s []*Distribution
 
 	//배포
-	s = append(s, &Distribution{Path: ApiV1, Version: V1})
-	s = append(s, &Distribution{Path: ApiV3, Version: V1})
-	s = append(s, &Distribution{Path: ApiV5, Version: V5})
-	s = append(s, &Distribution{Path: Workspace, Version: V1})
-	s = append(s, &Distribution{Path: Workspace, Version: V4})
-	s = append(s, &Distribution{Path: Project, Version: V1})
-	s = append(s, &Distribution{Path: Project, Version: V4})
-	s = append(s, &Distribution{Path: Project, Version: V5})
-	s = append(s, &Distribution{Path: Channel, Version: V1})
-	s = append(s, &Distribution{Path: Channel, Version: V4})
-	s = append(s, &Distribution{Path: Channel, Version: V5})
-
-	s = append(s, &Distribution{Path: Socket, Version: V1})
-	s = append(s, &Distribution{Path: Badge, Version: V1})
-	s = append(s, &Distribution{Path: Task, Version: V5})
-	s = append(s, &Distribution{Path: SupportApi, Version: V1})
-	s = append(s, &Distribution{Path: SupportFront, Version: V1})
-	s = append(s, &Distribution{Path: SupportGrpc, Version: V1})
-	s = append(s, &Distribution{Path: Storage, Version: V1})
-
 	s = append(s, &Distribution{Path: Company, Version: V1})
+	s = append(s, &Distribution{Path: Asset, Version: V1})
+	s = append(s, &Distribution{Path: Auth, Version: V1})
+	s = append(s, &Distribution{Path: Auth, Version: V4})
 	s = append(s, &Distribution{Path: User, Version: V1})
 	s = append(s, &Distribution{Path: User, Version: V4})
-	s = append(s, &Distribution{Path: Mention, Version: V1})
+	s = append(s, &Distribution{Path: SupportGrpc, Version: V1})
+	s = append(s, &Distribution{Path: Storage, Version: V1})
+	s = append(s, &Distribution{Path: Emoji, Version: V1})
+	s = append(s, &Distribution{Path: Approval, Version: V1})
 	s = append(s, &Distribution{Path: Contents, Version: V1})
+	s = append(s, &Distribution{Path: Notification, Version: V1})
+	s = append(s, &Distribution{Path: Task, Version: V4})
+	s = append(s, &Distribution{Path: Task, Version: V5})
+
+	//Tech-Switness/switbe-grpc-company-golang
+	//Tech-Switness/switbe-grpc-asset-golang
+	//Tech-Switness/switbe-grpc-auth-golang
+	//Tech-Switness/switbe-grpc-user-golang v1,v4
+	//swit-be/swit-support-grpc-golang
+	//Tech-Switness/switbe-grpc-company-golang
+	//switbe-apiv1
+	//switbe-gcs-file-golang
+	//switbe-grpc-emoji
+	//switbe-grpc-approval-golang
+	//switbe-grpc-contents-golang
+	//Tech-Switness/switbe-notification
+	//switbe-grpc-task-golang
 
 	d := New(s)
 	_ = d.merge()

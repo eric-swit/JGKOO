@@ -2,27 +2,33 @@ package main
 
 import (
 	"fmt"
-	"time"
+	base62 "github.com/eknkc/basex"
+	"strings"
 )
 
 func main() {
-	// The date we're trying to
-	// parse, work with and format
-	myDateString := "2018-01-20 04:35"
-	fmt.Println("My Starting Date:\t", myDateString)
 
-	// Parse the date string into Go's time object
-	// The 1st param specifies the format,
-	// 2nd is our date string
-	myDate, err := time.Parse("2006-01-02 15:04", myDateString)
-	if err != nil {
-		panic(err)
+	enc, _ := base62.NewEncoding("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+
+	decodeParam, _ := enc.Decode(url)
+	rawQueryParams := strings.Split(fmt.Sprintf("%s", decodeParam), "=")
+
+	var location string
+	var contId string
+	for i, val := range rawQueryParams {
+		if i == 1 {
+			location = strings.Replace(val, "&cont_id", "", -1)
+		} else if i == 2 {
+			contId = val
+		}
 	}
+	fmt.Println(location)
+	fmt.Println(contId)
+	return location, contId, nil
+	location, contId, _ := util.UrlBase62Decoding("81KeKwGaJbr99HdhEHtxyST0MjpXXd6GexPfwZR3aNv1yKXQk3")
 
-	// Format uses the same formatting style
-	// as parse, or we can use a pre-made constant
-	fmt.Println("My Date Reformatted:\t", myDate.Format(time.RFC822))
+}
 
-	// In YY-MM-DD
-	fmt.Println("Just The Date:\t\t", myDate.Format("2006-01-02"))
+type Attt struct {
+	Name string `json:"name"`
 }
